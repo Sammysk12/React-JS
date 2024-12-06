@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { CounterProvider } from './Contexts/CounterContext';
+import { CartProvider } from './Ecom App/Contexts/CartContext';
 
 
 // function MyComponent(){
@@ -24,7 +26,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     {/* <MyComponent/>    */}
+    {/* <CounterProvider> */}
+    <CartProvider>
     <App/>
+
+    </CartProvider>
+
+    {/* </CounterProvider> */}
   </React.StrictMode>
 );
 
