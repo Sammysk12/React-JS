@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { CounterProvider } from './Contexts/CounterContext';
-import { CartProvider } from './Ecom App/Contexts/CartContext';
-
+// import { CounterProvider } from './Contexts/CounterContext';
+// import { CartProvider } from './Ecom App/Contexts/CartContext';
+import {BrowserRouter, Routes, Router, Route, useParams,NavLink} from "react-router-dom";
 
 // function MyComponent(){
 //   const name = "Samarth Kalshetti";
@@ -22,15 +22,128 @@ import { CartProvider } from './Ecom App/Contexts/CartContext';
 // function Add(x,y){
 //   return x+y;
 // }
+
+
+const Home= () => {
+  const[posts, setPosts] = useState([]);
+
+  useEffect(() =>{
+  
+    fetch("https://jsonplaceholder.typicode.com/posts")
+  .then((data) => data.json())
+  .then((data)=> setPosts(data));
+
+  
+  
+
+},[]);
+
+  return(
+    <div>
+      <h1>Home Page</h1>
+      <div className='post-container'>
+        {posts.map((post) =>(
+          <NavLink  className="posts" to={`/post/${post.id}`} style={{display:"block"}}>{post.title}</NavLink>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+
+
+const About= () => {
+  return(
+    <div>
+      <h1>About Page</h1>
+    </div>
+  )
+}
+
+const Profile= () => {
+  return(
+    <div>
+      <h1>Profile Page</h1>
+    </div>
+  )
+}
+const Settings= () => {
+  return(
+    <div>
+      <h1>Settings Page</h1>
+    </div>
+  )
+}
+const SayUser= () => {
+
+const params = useParams();
+
+  return(
+    <div>
+      <h1>Your Name is {params.userId}</h1>
+    </div>
+  )
+}
+const PostPage= () => {
+
+  
+  const params = useParams();
+  const [data,setData]  = useState(null);
+  console.log(params);
+
+  useEffect (() =>{
+    fetch(`https://jsonplaceholder.typicode.com/posts/${params.postId}`)
+    .then(data => data.json())
+    .then(data => setData(data));
+  },[])
+
+
+  console.log(data);
+  if(data === null) return <p>Loading...</p>
+  
+  return(
+    <div>
+      <h1>Here is the post</h1>
+      <p>{data.title}</p>
+      <p>{data.body}</p>
+
+
+    </div>
+  )
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     {/* <MyComponent/>    */}
     {/* <CounterProvider> */}
-    <CartProvider>
-    <App/>
+    {/* <CartProvider> */}
 
-    </CartProvider>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Home/>} />
+      <Route path="/about" element={<About/>} />
+      <Route path="/post/:postId" element={<PostPage/>} />
+      
+
+      {/* Nested Routes */}
+      <Route path="account">
+      <Route path="profile" element={<Profile/>}/>
+      <Route path="settings" element={<Settings/>}/>
+      </Route>
+
+
+    {/* Dynamic routes user : in it */}
+    {/* In this case :userId is Dynamic value */}
+    <Route path="/user/:userId" element={<SayUser/>}/>
+      
+    </Routes>
+
+    {/* <App/> */}
+    </BrowserRouter>
+
+
+    {/* </CartProvider> */}
 
     {/* </CounterProvider> */}
   </React.StrictMode>

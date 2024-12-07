@@ -11,3 +11,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.posts{
+  text-decoration: none;
+  color:black;
+  padding: 10px 20px;
+  
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.posts:hover{
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  transition: 0.45s;
+}
